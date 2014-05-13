@@ -1,0 +1,247 @@
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+                            xmlns:System="clr-namespace:System;assembly=mscorlib"
+                            x:Class="PictureHttpServer.MainPage"
+                            mc:Ignorable="d"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <System:Double x:Key="SmallAboutTextFont">13</System:Double>
+        <System:Double x:Key="BigAboutTextFont">20</System:Double>
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal" />
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal" />
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush" />
+    </phone:PhoneApplicationPage.Foreground>
+
+    
+    <Grid x:Name="LayoutRoot">
+        <phone:Panorama Title="Windows Phone Photo Server">
+            <phone:PanoramaItem Header="Start">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90" />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               x:Name="Notification"
+                               TextWrapping="Wrap"
+                               Margin="10,0,0,0"
+                               FontSize="{StaticResource BigAboutTextFont}"
+                               Text="ddasdsadasdasdads
+                                     dasdasdasd
+                                    
+                               adasdasdad"/>
+
+                    <toolkit:ToggleSwitch Grid.Row="1"
+                                          x:Name="StartStopServer"
+                                          IsChecked="true"
+                                          Header="Photo Server status:"
+                                          Content="running"
+                                          Checked="StartStopServer_Checked"
+                                          Unchecked="StartStopServer_Unchecked">
+                        <toolkit:ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <ContentControl FontSize="{StaticResource BigAboutTextFont}"
+                                                Content="{Binding}"
+                                                Foreground="{StaticResource PhoneForegroundBrush}" />
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.HeaderTemplate>
+                    </toolkit:ToggleSwitch>
+
+                </Grid>
+            </phone:PanoramaItem>
+            <phone:PanoramaItem Header="Security">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="70" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Content="Allow connections from mobile network"
+                              Grid.Row="0"
+                              FontSize="{StaticResource BigAboutTextFont}"
+                              Unchecked="CheckBox_Unchecked_1"
+                              Checked="CheckBox_Checked_1"
+                              x:Name="AllowMobileConnections" />
+                    <CheckBox Content="Secure access with login and password"
+                              Grid.Row="2"
+                              FontSize="{StaticResource BigAboutTextFont}"
+                              x:Name="SecureWithCredidentials"
+                              Checked="SecureWithCredidentials_Checked"
+                              Unchecked="SecureWithCredidentials_Unchecked" />
+                    <TextBlock Grid.Row="4"
+                               Text="User login:"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+                    <TextBox Grid.Row="5"
+                             Text="Login"
+                             x:Name="UserLogin"
+                             FontSize="{StaticResource BigAboutTextFont}" />
+                    <TextBlock Grid.Row="7"
+                               Text="User password:"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+                    <TextBox Grid.Row="8"
+                             Text="Password"
+                             x:Name="UserPassword"
+                             FontSize="{StaticResource BigAboutTextFont}" />
+                    <Button Grid.Row="10"
+                            x:Name="SetLoginPassowrd"
+                            Tap="SetLoginPassowrd_Tap_1"
+                            Content="Set login and password" />
+                </Grid>
+            </phone:PanoramaItem>
+            <phone:PanoramaItem Header="Logs">
+                <StackPanel>
+                    <toolkit:ListPicker x:Name="LoggingLevel"
+                                        SelectionMode="Single"
+                                        Header="Set Logger Level"
+                                        FullModeHeader="Set Logger Level"
+                                        CacheMode="BitmapCache"
+                                        SelectionChanged="LoggingLevel_SelectionChanged_1">
+                        <toolkit:ListPicker.HeaderTemplate>
+                            <DataTemplate>
+                                <ContentControl FontSize="{StaticResource BigAboutTextFont}"
+                                                Content="{Binding}"
+                                                Foreground="{StaticResource PhoneForegroundBrush}" />
+                            </DataTemplate>
+                        </toolkit:ListPicker.HeaderTemplate>
+                    </toolkit:ListPicker>
+
+                    <ScrollViewer Height="300">
+                        <TextBlock x:Name="LogBox"
+                                   FontSize="16"
+                                   FontFamily="Calibri"
+                                   TextWrapping="Wrap"
+                                   Margin="10,0,10,0"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                   Foreground="{StaticResource CustomFontColor}" />
+                    </ScrollViewer>
+                </StackPanel>
+            </phone:PanoramaItem>
+            <phone:PanoramaItem Header="About">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="5" />
+
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="5" />
+
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="5" />
+
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="5" />
+
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Author -->
+                    <TextBlock Grid.Row="0"
+                               Text="Author"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+
+                    <TextBlock Grid.Row="1"
+                               Text="Mariusz Rokicki"
+                               FontSize="{StaticResource SmallAboutTextFont}"
+                               TextWrapping="Wrap" />
+
+                    <!-- Version -->
+                    <TextBlock Grid.Row="3"
+                               Text="Version"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+
+                    <TextBlock Grid.Row="4"
+                               Text="1.0.1"
+                               FontSize="{StaticResource SmallAboutTextFont}"
+                               TextWrapping="Wrap" />
+
+                    <!-- RATE THIS APPLICATION -->
+                    <TextBlock Grid.Row="6"
+                               Text="Rate this application"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+
+                    <TextBlock Grid.Row="7"
+                               Text="If you are enjoying this application, please take a minute and rate it"
+                               FontSize="{StaticResource SmallAboutTextFont}"
+                               TextWrapping="Wrap" />
+
+                    <Button Grid.Row="8"
+                            x:Name="RateButton"
+                            Tap="RateButton_Tap_1">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Assets/rate.png"
+                                        Stretch="Uniform" />
+                        </Button.Background>
+                    </Button>
+
+                    <!-- SENT EMAIL -->
+                    <TextBlock Grid.Row="10"
+                               Text="Contact me"
+                               FontSize="{StaticResource BigAboutTextFont}" />
+                    <TextBlock Grid.Row="11"
+                               Text="If you want to report any bugs, have any ideas about possible features, please contact me via email"
+                               FontSize="{StaticResource SmallAboutTextFont}"
+                               TextWrapping="Wrap" />
+                    <Button Grid.Row="12"
+                            x:Name="EmailUsButton"
+                            Tap="EmailUsButton_Tap_1">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Assets/mail.png"
+                                        Stretch="Uniform" />
+                        </Button.Background>
+                    </Button>
+
+                    <!-- DONATE -->
+                    <TextBlock Grid.Row="14"
+                               Text="Donate"
+                               FontSize="{StaticResource BigAboutTextFont}"
+                               Visibility="Collapsed" />
+                    <TextBlock Grid.Row="15"
+                               Text="dasddsadsadasdadsad"
+                               FontSize="{StaticResource SmallAboutTextFont}"
+                               TextWrapping="Wrap"
+                               Visibility="Collapsed" />
+                    <Button Grid.Row="16"
+                            Tap="EmailUsButton_Tap_1"
+                            Visibility="Collapsed">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Assets/donate.png"
+                                        Stretch="Uniform" />
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </phone:PanoramaItem>
+        </phone:Panorama>
+    </Grid>
+</phone:PhoneApplicationPage>
